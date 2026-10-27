@@ -335,20 +335,20 @@
                         <p class="current-info">你收到此邮件，是因为你是这些权限的拥有者。</p>
                         <div class="current-date">{% now "Y-m-d H:i:s" %}</div>
                     </section>
-                    {% if mail_footer %}
-                    <div aria-hidden="true" style="height: 32px;"></div>
-                    {% else %}
+                    {% if show_renewal_action %}
                     <div class="renewal-action-flex">
                         <div class="renewal-action" id="renewal-button"><a style="color: #fff;" href="{{ url }}">马上续期</a></div>
                         <div>如不再需要，请在<a style="color: #3a84ff;" href="{{ index_url }}">「我的权限」</a>页面回收</div>
                     </div>
+                    {% else %}
+                    <div aria-hidden="true" style="height: 32px;"></div>
                     {% endif %}
                 </td>
             </tr>
         </table>
         {% if mail_footer %}
-        <!-- 保留原操作行的 32px 占位；上移 44px，框外上下各留 11px。 -->
-        <div class="mail-footer" style="display: flex; justify-content: center; align-items: center; position: relative; margin-top: -44px; padding-bottom: 11px; height: 32px; line-height: 32px; text-align: center; color: #63656e; font-size: 13px;">
+        <!-- 操作行隐藏时保留 32px 占位；显示时 footer 下移，避免与操作行重叠。 -->
+        <div class="mail-footer" style="display: flex; justify-content: center; align-items: center; position: relative; margin-top: {% if show_renewal_action %}-1px{% else %}-44px{% endif %}; padding-bottom: 11px; height: 32px; line-height: 32px; text-align: center; color: #63656e; font-size: 13px;">
             {{ mail_footer }}
         </div>
         {% endif %}

@@ -90,6 +90,7 @@ class SendUserExpireRemindMailTask(Task):
                     "mail_header": settings.RENEWAL_MAIL_HEADER,
                     "mail_title": mail_subject,
                     "mail_footer": settings.RENEWAL_MAIL_FOOTER,
+                    "show_renewal_action": settings.RENEWAL_MAIL_SHOW_RENEWAL_ACTION,
                 },
             )
             try:

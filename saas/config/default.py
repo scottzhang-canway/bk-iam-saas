@@ -43,6 +43,8 @@ RENEWAL_MAIL_GROUP_SUBJECT = env.str(
     "BK_IAM_RENEWAL_MAIL_GROUP_SUBJECT", default="【蓝鲸权限中心】用户组成员续期提醒"
 )
 RENEWAL_MAIL_FOOTER = env.str("BK_IAM_RENEWAL_MAIL_FOOTER", default="")
+# 独立控制底部续期按钮及同行提示是否显示
+RENEWAL_MAIL_SHOW_RENEWAL_ACTION = env.bool("BK_IAM_RENEWAL_MAIL_SHOW_RENEWAL_ACTION", default=True)
 
 
 # 定义一个补丁来兼容 MySQL 5.7
