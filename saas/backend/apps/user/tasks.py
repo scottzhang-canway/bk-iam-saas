@@ -76,13 +76,24 @@ class SendUserExpireRemindMailTask(Task):
             params["tab"] = "custom"
         url = self.base_url + "?" + urlencode(params)
 
+        mail_subject = settings.RENEWAL_MAIL_USER_SUBJECT
+
         if NotificationTypeEnum.MAIL.value in notification_types:
             mail_content = render_to_string(
                 "user_expired_mail.html",
-                {"groups": groups, "policies": policies, "url": url, "user": user, "index_url": settings.APP_URL},
+                {
+                    "groups": groups,
+                    "policies": policies,
+                    "url": url,
+                    "user": user,
+                    "index_url": settings.APP_URL,
+                    "mail_header": settings.RENEWAL_MAIL_HEADER,
+                    "mail_title": mail_subject,
+                    "mail_footer": settings.RENEWAL_MAIL_FOOTER,
+                },
             )
             try:
-                esb.send_mail(user.username, "【蓝鲸权限中心】权限续期提醒", mail_content)
+                esb.send_mail(user.username, mail_subject, mail_content)
             except Exception:  # pylint: disable=broad-except
                 logger.exception("send user_group_policy_expire_remind email fail, username=%s", user.username)
 
@@ -93,7 +104,7 @@ class SendUserExpireRemindMailTask(Task):
             )
 
             data = {
-                "title": "**【蓝鲸权限中心】权限续期提醒**",
+                "title": f"**{mail_subject}**",
                 "summary": content,
                 "approvers": username,
                 "detail_url": url,

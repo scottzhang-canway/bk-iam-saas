@@ -33,6 +33,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # load environment variables from .env file
 environ.Env.read_env()
 
+# 续期提醒邮件：横幅、主题和末尾文字
+RENEWAL_MAIL_HEADER = env.str("BK_IAM_RENEWAL_MAIL_HEADER", default="蓝鲸权限中心")
+# 邮件主题同时用作 HTML title 与微信消息 title
+RENEWAL_MAIL_USER_SUBJECT = env.str(
+    "BK_IAM_RENEWAL_MAIL_USER_SUBJECT", default="【蓝鲸权限中心】权限续期提醒"
+)
+RENEWAL_MAIL_GROUP_SUBJECT = env.str(
+    "BK_IAM_RENEWAL_MAIL_GROUP_SUBJECT", default="【蓝鲸权限中心】用户组成员续期提醒"
+)
+RENEWAL_MAIL_FOOTER = env.str("BK_IAM_RENEWAL_MAIL_FOOTER", default="")
+
 
 # 定义一个补丁来兼容 MySQL 5.7
 class PatchFeatures:
